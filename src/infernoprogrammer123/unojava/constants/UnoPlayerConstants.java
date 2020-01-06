@@ -1,6 +1,6 @@
 package infernoprogrammer123.unojava.constants;
 
-public enum UnoTurnConstants {
+public enum UnoPlayerConstants {
 	
 	HUMAN, COMPUTER
 	

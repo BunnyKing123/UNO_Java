@@ -32,5 +32,30 @@ public class UnoConsoleCard {
 	 * @return UnoNumberConstant
 	 */
 	public UnoNumberConstants getNumber() { return number; }
+	
+	public String getCard() {
+		
+		String cardColor = "DEFAULT";
+		String cardNum = "DEFAULT";
+		
+		if (color == UnoColorConstants.RED) {
+			cardColor = "Red";
+		} else if (color == UnoColorConstants.BLUE) {
+			cardColor = "Blue";
+		} else if (color == UnoColorConstants.GREEN) {
+			cardColor = "Green";
+		} else {
+			cardColor = "Yellow";
+		}
+		
+		if (number == UnoNumberConstants.ONE) {
+			cardNum = "One";
+		} else if (number == UnoNumberConstants.TWO) {
+			cardNum = "Two";
+		}
+		
+		return cardColor + cardNum;
+		
+	}
 
 }

@@ -31,17 +31,17 @@ public class UnoConsoleGame {
 	
 	private void play() {
 		// Variable storing the turn
-		UnoTurnConstants turn;
+		UnoPlayerConstants turn;
 
 		if (Math.round(Math.random()) == 1) {
-			turn = UnoTurnConstants.HUMAN;
+			turn = UnoPlayerConstants.HUMAN;
 		} else {
-			turn = UnoTurnConstants.COMPUTER;
+			turn = UnoPlayerConstants.COMPUTER;
 
 		}
 		
 		while (true) {
-			if (turn == UnoTurnConstants.HUMAN) {
+			if (turn == UnoPlayerConstants.HUMAN) {
 				// When it's the human turn check if the human has any playable cards
 				ArrayList<UnoConsoleCard> playable = new ArrayList<UnoConsoleCard>();
 				
@@ -181,8 +181,8 @@ public class UnoConsoleGame {
 		}
 	}
 	
-	private void drawCard(UnoTurnConstants turn) {
-		if (turn == UnoTurnConstants.HUMAN) {
+	private void drawCard(UnoPlayerConstants turn) {
+		if (turn == UnoPlayerConstants.HUMAN) {
 			player1Hand.add(deck.get(0));
 			deck.remove(0);
 		} else {
