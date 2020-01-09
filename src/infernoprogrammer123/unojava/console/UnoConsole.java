@@ -6,7 +6,7 @@ public class UnoConsole {
 	
 	public static void main(String[] args) {
 		mainGame = new UnoConsoleGame();
-		mainGame.setup();
+		mainGame.play();
 	}
 	
 }

@@ -26,6 +26,10 @@ public class UnoConsoleCard {
 	 * @return UnoColorConstant
 	 */
 	public UnoColorConstants getColor() { return color; }
+	
+	public void setColor(UnoColorConstants color) {
+		this.color = color;
+	}
 
 	/**
 	 * Returns the Uno Number Constant of the card
@@ -48,7 +52,7 @@ public class UnoConsoleCard {
 		} else if (color == UnoColorConstants.YELLOW) {
 			cardColor = "Yellow";
 		} else {
-			cardColor = "Wild";
+			cardColor = "Uncolored";
 		}
 
 		if (number == UnoNumberConstants.ONE) {
@@ -72,7 +76,7 @@ public class UnoConsoleCard {
 		} else if (number == UnoNumberConstants.ZERO) {
 		    cardNum = " Zero";
 		} else if (number == UnoNumberConstants.PLUS_FOUR) {
-		    cardNum = "Plus Four";
+		    cardNum = " Plus Four";
 		} else if (number == UnoNumberConstants.PLUS_TWO) {
 		    cardNum = " Plus Two";
 		} else if (number == UnoNumberConstants.REVERSE) {
@@ -80,7 +84,7 @@ public class UnoConsoleCard {
 		} else if (number == UnoNumberConstants.SKIP) {
 			cardNum = " Skip";
 		} else {
-			cardNum = "";
+			cardNum = " Wild Card";
 		}
 
 		return cardColor + cardNum;

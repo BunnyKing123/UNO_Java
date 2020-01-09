@@ -20,7 +20,7 @@ public class UnoConsoleGame {
 		game.setup();
 	}
 	
-	public void setup() {
+	private void setup() {
 		// Create and shuffle the deck
 		createDeck();
 		deck = shuffleDeck();
@@ -45,27 +45,81 @@ public class UnoConsoleGame {
 		
 		// Deal cards
 		dealCards();
-
-		// Begin the game
-		play();
+		
+		// Pick the turn
+		turn = (int) (Math.random() * 3);
 	}
 
-	private void play() {
+	public void play() {
 		
-		for (UnoConsolePlayer player:players) {
-			for (UnoConsoleCard card:player.getHand()) {
-				System.out.println(card.getCard());
+		// Variable to store whether player is playing or not
+		boolean playingGame = true;
+		
+		// While the game is playing
+		while (playingGame) {
+			// Set up the game
+			setup();
+			
+			// main game
+			boolean mainGame = true;
+			while (mainGame) {
+				UnoConsolePlayer currentPlayer = players.get(turn);
+				System.out.println("It is now Player " + (turn + 1) + "'s turn");
+				System.out.println("The top card is: " + topCard.getCard());
+				// If the player is a human...
+				if (currentPlayer.getPlayerType() == UnoPlayerConstants.HUMAN) {
+					// Tell user how many cards other players have
+					for (int j = 0; j < 4; j++) {
+						if (!players.get(j).equals(currentPlayer)) {
+							System.out.println("Player " + (j + 1) + " currently has " + players.get(j).getHand().size() + " cards.");
+						}
+					}
+					
+					// Get the player's move
+					UnoConsoleCard cardPlayed = currentPlayer.playerMove();
+					
+					// Return the wild card back to a wild card
+					if (topCard.getNumber() == UnoNumberConstants.PLUS_FOUR || topCard.getNumber() == UnoNumberConstants.WILD) {
+						topCard.setColor(UnoColorConstants.WILD);
+						discardPile.get(0).setColor(UnoColorConstants.WILD);
+					}
+					
+					// If the player had to draw a card
+					if (cardPlayed == null) {
+						drawCard();
+					} else {
+						// Check if the move is special
+						checkSpecial(cardPlayed);
+						
+						// Add it to the top
+						addToTop(cardPlayed);
+					}
+				} else {
+					// Get the pc's move
+					UnoConsoleCard cardPlayed = currentPlayer.pcMove();
+					
+					// Return the wild card back to a wild card
+					if (topCard.getNumber() == UnoNumberConstants.PLUS_FOUR || topCard.getNumber() == UnoNumberConstants.WILD) {
+						topCard.setColor(UnoColorConstants.WILD);
+						discardPile.get(0).setColor(UnoColorConstants.WILD);
+					}
+					
+					// If the player had to draw a card
+					if (cardPlayed == null) {
+						drawCard();
+					} else {
+						// Check if the move is special
+						checkSpecial(cardPlayed);
+						
+						// Add it to the top
+						addToTop(cardPlayed);
+					}
+				}
+				shiftTurn();
+				
 			}
 		}
 		
-		System.out.println("Top card: " + topCard.getCard());
-		
-		UnoConsoleCard played = players.get(0).playerMove();
-		if (played == null) {
-			System.out.println("You had no valid cards");
-		} else {
-			System.out.println(played.getCard());
-		}
 		
 	}
 	
@@ -75,6 +129,70 @@ public class UnoConsoleGame {
 	
 	public ArrayList<UnoConsoleCard> getDiscardPile() {
 		return discardPile;
+	}
+	
+	private void checkSpecial(UnoConsoleCard cardPlayed) {
+		if (cardPlayed.getColor() == UnoColorConstants.WILD) {
+			if (players.get(turn).getPlayerType() == UnoPlayerConstants.HUMAN) {
+				boolean gettingInput = true;
+				
+				while (gettingInput) {
+					System.out.println("You must select a number for one of the 4 colors that your wild card will be\n1 - Red\n2 - Yellow\n3 - Green\n4 - Blue");
+					int userInput;
+					
+					try {
+						userInput = Integer.parseInt(userInput());
+						if (userInput > 4 || userInput < 1) {
+							System.out.println("Unfortunately your input is out of range! Try again");
+						} else {
+							if (userInput == 1) {
+								cardPlayed.setColor(UnoColorConstants.RED);
+							} else if (userInput == 2) {
+								cardPlayed.setColor(UnoColorConstants.YELLOW);
+							} else if (userInput == 3) {
+								cardPlayed.setColor(UnoColorConstants.GREEN);
+							} else {
+								cardPlayed.setColor(UnoColorConstants.BLUE);
+							}
+							
+							gettingInput = false;
+						}
+					} catch (NumberFormatException nfe) {
+						System.out.println("Unfortunately your input is non numeric, it must be numeric!");
+					}
+				}
+			} else {
+				int pcInput = (int) ((Math.random() * 3) + 1);
+				
+				if (pcInput == 1) {
+					cardPlayed.setColor(UnoColorConstants.RED);
+				} else if (pcInput == 2) {
+					cardPlayed.setColor(UnoColorConstants.YELLOW);
+				} else if (pcInput == 3) {
+					cardPlayed.setColor(UnoColorConstants.GREEN);
+				} else {
+					cardPlayed.setColor(UnoColorConstants.BLUE);
+				}
+				System.out.println("PC: The wild card is now a " + cardPlayed.getCard());
+			}
+		}
+		
+		if (cardPlayed.getNumber() == UnoNumberConstants.SKIP) {
+			shiftTurn();
+		}
+	}
+	
+	private void addToTop(UnoConsoleCard cardPlayed) {
+		discardPile.add(cardPlayed);
+		topCard = cardPlayed;
+	}
+	
+	private void shiftTurn() {
+		if (turn == 3) {
+			turn = 0;
+		} else {
+			turn++;
+		}
 	}
 
 	/**
@@ -166,7 +284,7 @@ public class UnoConsoleGame {
 	}
 
 	private void drawCard() {
-		players.get(turn - 1).getHand().add(deck.get(0));
+		players.get(turn).getHand().add(deck.get(0));
 		discardPile.add(deck.get(0));
 		deck.remove(0);
 	}

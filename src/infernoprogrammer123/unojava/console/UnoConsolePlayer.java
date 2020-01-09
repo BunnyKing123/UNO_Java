@@ -12,6 +12,40 @@ public class UnoConsolePlayer {
 		this.playerType = playerType;
 	}
 	
+	public UnoPlayerConstants getPlayerType() {
+		return playerType;
+	}
+	
+	public UnoConsoleCard pcMove() {
+		// Get the top card and discard pile
+		UnoConsoleCard topCard = UnoConsole.mainGame.getTopCard();
+		ArrayList<UnoConsoleCard> discardPile = UnoConsole.mainGame.getDiscardPile();
+		
+		// Create an arraylist of playable cards
+		ArrayList<UnoConsoleCard> playable = new ArrayList<UnoConsoleCard>();
+		
+		// For each card in the hand, check if the card is playable and add to the list of playable cards
+		for (UnoConsoleCard card:hand) {
+			if (cardValid(card, topCard)) {
+				playable.add(card);
+			}
+		}
+		
+		if (playable.size() == 0) {
+			// If there are no playable cards, return nothing
+			System.out.println("PC: Looks like I'll have to draw");
+			return null;
+		} else {
+			// Get a random item from the list
+			int rand = (int) (Math.random() * (playable.size() - 1));
+			UnoConsoleCard card = playable.get(rand);
+			hand.remove(card);
+			System.out.println("I would like to play " + card.getCard());
+			System.out.println("I now have " + hand.size() + " cards left");
+			return card;
+		}
+	}
+	
 	public UnoConsoleCard playerMove() {
 		// Get the top card and discard pile
 		UnoConsoleCard topCard = UnoConsole.mainGame.getTopCard();
@@ -65,6 +99,7 @@ public class UnoConsolePlayer {
 						System.out.println("Unfortunately that card is invalid!");
 					} else {
 						choice = hand.get(userInput);
+						hand.remove(userInput);
 						validInput = true;
 					}
 					
