@@ -161,7 +161,9 @@ public class UnoConsoleGame {
 	
 	private void checkSpecial(UnoConsoleCard cardPlayed) {
 		if (cardPlayed.getColor() == UnoColorConstants.WILD) {
+			// If the card is a wild card
 			if (players.get(turn).getPlayerType() == UnoPlayerConstants.HUMAN) {
+				// Get player input on what color it should be
 				boolean gettingInput = true;
 				
 				while (gettingInput) {
@@ -190,6 +192,7 @@ public class UnoConsoleGame {
 					}
 				}
 			} else {
+				// Get pc input on what it should be
 				int pcInput = (int) ((Math.random() * 3) + 1);
 				
 				if (pcInput == 1) {
@@ -205,8 +208,21 @@ public class UnoConsoleGame {
 			}
 		}
 		
-		if (cardPlayed.getNumber() == UnoNumberConstants.SKIP) {
+		if (cardPlayed.getNumber() == UnoNumberConstants.SKIP) { // If the card is a skip, shift a turn, the next shift is done in the main loop
 			shiftTurn();
+			System.out.println("Yikes looks like " + players.get(turn) + " was skipped");
+		} else if (cardPlayed.getNumber() == UnoNumberConstants.PLUS_TWO) { // If the card is a plus two skip the next turn and make sure that next player draws two cards
+			shiftTurn();
+			for (int i = 0; i < 2; i++) {
+				drawCard();
+			}
+			System.out.println("Yikes! looks like " + players.get(turn) + " had to draw two, oh you've been skipped too");
+		} else if (cardPlayed.getNumber() == UnoNumberConstants.PLUS_FOUR) {
+			shiftTurn();
+			for (int i = 0; i < 4; i++) {
+				drawCard();
+			}
+			System.out.println("Yikes! looks like " + players.get(turn) + " had to draw FOUR! Oh you've been skipped too");
 		}
 	}
 	
