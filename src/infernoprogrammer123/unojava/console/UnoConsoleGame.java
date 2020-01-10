@@ -113,6 +113,15 @@ public class UnoConsoleGame {
 							discardPile.get(0).setColor(UnoColorConstants.WILD);
 						}
 						
+						// Check if the player has won or has one card remaining
+						if (currentPlayer.getHand().size() == 1) {
+							System.out.println(currentPlayer + " shouts \"UNO!\" This player has ONE CARD LEFT!");
+						} else if (currentPlayer.getHand().size() == 0) {
+							System.out.println(currentPlayer + " screams with great vigor: \"UNO!\" WE HAVE A WINNER!!!");
+							// Close the main game loop
+							mainGame = false;
+						}
+						
 						// Check if the move is special
 						checkSpecial(cardPlayed);
 						
@@ -133,6 +142,15 @@ public class UnoConsoleGame {
 							discardPile.get(0).setColor(UnoColorConstants.WILD);
 						}
 						
+						// Check if the player has won or has one card remaining
+						if (currentPlayer.getHand().size() == 1) {
+							System.out.println(currentPlayer + " shouts \"UNO!\" This player has ONE CARD LEFT!");
+						} else if (currentPlayer.getHand().size() == 0) {
+							System.out.println(currentPlayer + " screams with great vigor: \"UNO!\" WE HAVE A WINNER!!!");
+							// Close the main game loop
+							mainGame = false;
+						}
+						
 						// Check if the move is special
 						checkSpecial(cardPlayed);
 						
@@ -143,6 +161,9 @@ public class UnoConsoleGame {
 				shiftTurn();
 				
 			}
+			
+			// Close the outer loop
+			playingGame = false;
 		}
 		
 		
