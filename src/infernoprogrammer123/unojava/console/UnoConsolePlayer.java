@@ -7,9 +7,11 @@ public class UnoConsolePlayer {
 	
 	private ArrayList<UnoConsoleCard> hand = new ArrayList<UnoConsoleCard>();
 	private UnoPlayerConstants playerType;
+	private String name;
 	
-	public UnoConsolePlayer(UnoPlayerConstants playerType) {
+	public UnoConsolePlayer(UnoPlayerConstants playerType, String name) {
 		this.playerType = playerType;
+		this.name = name;
 	}
 	
 	public UnoPlayerConstants getPlayerType() {
@@ -40,7 +42,7 @@ public class UnoConsolePlayer {
 			int rand = (int) (Math.random() * (playable.size() - 1));
 			UnoConsoleCard card = playable.get(rand);
 			hand.remove(card);
-			System.out.println("I would like to play " + card.getCard());
+			System.out.println("I would like to play " + card);
 			System.out.println("I now have " + hand.size() + " cards left");
 			return card;
 		}
@@ -76,7 +78,7 @@ public class UnoConsolePlayer {
 			
 			// Print the list of cards
 			for (int i = 0; i < hand.size(); i++) {
-				System.out.println(i + " - " + hand.get(i).getCard());
+				System.out.println(i + " - " + hand.get(i));
 			}
 			
 			// Ask user to pick the number
@@ -138,6 +140,11 @@ public class UnoConsolePlayer {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 	
 }

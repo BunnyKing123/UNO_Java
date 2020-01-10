@@ -37,8 +37,9 @@ public class UnoConsoleCard {
 	 * @return UnoNumberConstant
 	 */
 	public UnoNumberConstants getNumber() { return number; }
-
-	public String getCard() {
+	
+	@Override
+	public String toString() {
 
 		String cardColor = "DEFAULT";
 		String cardNum = "DEFAULT";
