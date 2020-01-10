@@ -13,6 +13,7 @@ public class UnoConsoleGame {
 	private ArrayList<UnoConsolePlayer> players = new ArrayList<UnoConsolePlayer>();
 	private int turn;
 	private int numPlayers;
+	private UnoOrderConstants order = UnoOrderConstants.NORMAL;
 	
 	private UnoConsoleCard topCard;
 	
@@ -53,10 +54,6 @@ public class UnoConsoleGame {
 			} else {
 				players.add(new UnoConsolePlayer(UnoPlayerConstants.COMPUTER, name));
 			}
-			
-
-			
-			
 			System.out.println();
 		}
 		
@@ -106,16 +103,16 @@ public class UnoConsoleGame {
 					UnoConsoleCard cardPlayed = currentPlayer.playerMove();
 					System.out.println();
 					
-					// Return the wild card back to a wild card
-					if (topCard.getNumber() == UnoNumberConstants.PLUS_FOUR || topCard.getNumber() == UnoNumberConstants.WILD) {
-						topCard.setColor(UnoColorConstants.WILD);
-						discardPile.get(0).setColor(UnoColorConstants.WILD);
-					}
-					
 					// If the player had to draw a card
 					if (cardPlayed == null) {
 						drawCard();
 					} else {
+						// Return the wild card back to a wild card
+						if (topCard.getNumber() == UnoNumberConstants.PLUS_FOUR || topCard.getNumber() == UnoNumberConstants.WILD) {
+							topCard.setColor(UnoColorConstants.WILD);
+							discardPile.get(0).setColor(UnoColorConstants.WILD);
+						}
+						
 						// Check if the move is special
 						checkSpecial(cardPlayed);
 						
@@ -126,16 +123,16 @@ public class UnoConsoleGame {
 					// Get the pc's move
 					UnoConsoleCard cardPlayed = currentPlayer.pcMove();
 					
-					// Return the wild card back to a wild card
-					if (topCard.getNumber() == UnoNumberConstants.PLUS_FOUR || topCard.getNumber() == UnoNumberConstants.WILD) {
-						topCard.setColor(UnoColorConstants.WILD);
-						discardPile.get(0).setColor(UnoColorConstants.WILD);
-					}
-					
 					// If the player had to draw a card
 					if (cardPlayed == null) {
 						drawCard();
 					} else {
+						// Return the wild card back to a wild card
+						if (topCard.getNumber() == UnoNumberConstants.PLUS_FOUR || topCard.getNumber() == UnoNumberConstants.WILD) {
+							topCard.setColor(UnoColorConstants.WILD);
+							discardPile.get(0).setColor(UnoColorConstants.WILD);
+						}
+						
 						// Check if the move is special
 						checkSpecial(cardPlayed);
 						
@@ -217,12 +214,19 @@ public class UnoConsoleGame {
 				drawCard();
 			}
 			System.out.println("Yikes! looks like " + players.get(turn) + " had to draw two, oh you've been skipped too");
-		} else if (cardPlayed.getNumber() == UnoNumberConstants.PLUS_FOUR) {
+		} else if (cardPlayed.getNumber() == UnoNumberConstants.PLUS_FOUR) { // If the card is a plus four skip the next turn and make that next player draw 4
 			shiftTurn();
 			for (int i = 0; i < 4; i++) {
 				drawCard();
 			}
 			System.out.println("Yikes! looks like " + players.get(turn) + " had to draw FOUR! Oh you've been skipped too");
+		} else if (cardPlayed.getNumber() == UnoNumberConstants.REVERSE) {
+			if (order == UnoOrderConstants.NORMAL) {
+				order = UnoOrderConstants.REVERSED;
+			} else {
+				order = UnoOrderConstants.NORMAL;
+			}
+			System.out.println(players.get(turn) + " played a reverse!");
 		}
 	}
 	
@@ -232,10 +236,18 @@ public class UnoConsoleGame {
 	}
 	
 	private void shiftTurn() {
-		if (turn == (numPlayers - 1)) {
-			turn = 0;
+		if (order == UnoOrderConstants.NORMAL) {
+			if (turn == (numPlayers - 1) ) {
+				turn = 0;
+			} else {
+				turn++;
+			}
 		} else {
-			turn++;
+			if (turn == 0 ) {
+				turn = (numPlayers - 1);
+			} else {
+				turn--;
+			}
 		}
 	}
 
