@@ -311,17 +311,14 @@ public class UnoConsoleGame {
 	}
 
 	private void drawCard() {
-		players.get(turn).getHand().add(deck.get(0));
-		deck.remove(0);
-	}
-	
-	private void checkEmptyDeck() {
 		if (deck.size() == 0) {
 			shuffleDeck(discardPile);
 			for (UnoConsoleCard card:discardPile) {
 				discardPile.remove(card);
 			}
 		}
+		players.get(turn).getHand().add(deck.get(0));
+		deck.remove(0);
 	}
 	
 	public static String userInput() {
