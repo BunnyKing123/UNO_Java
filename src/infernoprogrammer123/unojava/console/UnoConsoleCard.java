@@ -40,10 +40,11 @@ public class UnoConsoleCard {
 	
 	@Override
 	public String toString() {
-
+		
 		String cardColor = "DEFAULT";
 		String cardNum = "DEFAULT";
-
+		
+		/*
 		if (color == UnoColorConstants.RED) {
 			cardColor = "Red";
 		} else if (color == UnoColorConstants.BLUE) {
@@ -55,40 +56,9 @@ public class UnoConsoleCard {
 		} else {
 			cardColor = "Uncolored";
 		}
+		*/
 
-		if (number == UnoNumberConstants.ONE) {
-			cardNum = " One";
-		} else if (number == UnoNumberConstants.TWO) {
-			cardNum = " Two";
-		} else if (number == UnoNumberConstants.THREE) {
-		    cardNum = " Three";
-		} else if (number == UnoNumberConstants.FOUR) {
-		    cardNum = " Four";
-		} else if (number == UnoNumberConstants.FIVE) {
-		    cardNum = " Five";
-		} else if (number == UnoNumberConstants.SIX) {
-		    cardNum = " Six";
-		} else if (number == UnoNumberConstants.SEVEN) {
-		    cardNum = " Seven";
-		} else if (number == UnoNumberConstants.EIGHT) {
-		    cardNum = " Eight";
-		} else if (number == UnoNumberConstants.NINE) {
-		    cardNum = " Nine";
-		} else if (number == UnoNumberConstants.ZERO) {
-		    cardNum = " Zero";
-		} else if (number == UnoNumberConstants.PLUS_FOUR) {
-		    cardNum = " Plus Four";
-		} else if (number == UnoNumberConstants.PLUS_TWO) {
-		    cardNum = " Plus Two";
-		} else if (number == UnoNumberConstants.REVERSE) {
-			cardNum = " Reverse";
-		} else if (number == UnoNumberConstants.SKIP) {
-			cardNum = " Skip";
-		} else {
-			cardNum = " Wild Card";
-		}
-
-		return cardColor + cardNum;
+		return color + " " + number;
 
 	}
 
