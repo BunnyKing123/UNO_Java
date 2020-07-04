@@ -1,4 +1,4 @@
-package infernoprogrammer123.unojava.console;
+package io.github.bunnyking123.unojava.console;
 
 public class UnoConsole {
 	

@@ -1,4 +1,4 @@
-package infernoprogrammer123.unojava.constants;
+package io.github.bunnyking123.unojava.constants;
 
 public enum UnoPlayerConstants {
 	

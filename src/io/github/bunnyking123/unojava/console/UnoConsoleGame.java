@@ -1,9 +1,9 @@
-package infernoprogrammer123.unojava.console;
+package io.github.bunnyking123.unojava.console;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import infernoprogrammer123.unojava.constants.*;
+import io.github.bunnyking123.unojava.constants.*;
 
 public class UnoConsoleGame {
 	
